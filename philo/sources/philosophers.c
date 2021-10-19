@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:15:24 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 18:17:11 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/19 19:57:13 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	*routine(void *philo_p)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_p;
-	while (!philo->datas->dead && !philo->datas->is_end)
+	while (TRUE)
 	{
 		if (take_forks(philo))
 			return ((void *)1);

@@ -1,6 +1,6 @@
 NAME			= philo
 
-FLAGS			= -Wall -Wextra -Werror #-g -fsanitize=thread
+FLAGS			= -Wall -Wextra -Werror
 OPT				= -O3 -flto -Ofast -ffast-math -march=native
 LIBFT			= -L libft -lft
 

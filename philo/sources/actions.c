@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:24:48 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 19:03:50 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/19 20:02:10 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@ int	message(t_philo *philo, const char *msg, const char *color)
 	long	time;
 
 	time = 0;
-	if (philo->datas->dead || philo->datas->is_end)
-	{
-		if (pthread_mutex_lock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, LOCK_MUTEX_ERROR));
-		philo->datas->dead = TRUE;
-		if (pthread_mutex_unlock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, UNLOCK_MUTEX_ERROR));
-		return (0);
-	}
 	if (pthread_mutex_lock(&(philo->datas->write_m)))
 		return (set_error(philo->datas, LOCK_MUTEX_ERROR));
 	time = ft_get_time();
@@ -38,15 +29,6 @@ int	message(t_philo *philo, const char *msg, const char *color)
 
 int	think(t_philo *philo)
 {
-	if (philo->datas->dead || philo->datas->is_end)
-	{
-		if (pthread_mutex_lock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, LOCK_MUTEX_ERROR));
-		philo->datas->dead = TRUE;
-		if (pthread_mutex_unlock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, UNLOCK_MUTEX_ERROR));
-		return (0);
-	}
 	if (message(philo, "is thinking\n", "\033[0;35m"))
 		return (1);
 	return (0);
@@ -54,15 +36,6 @@ int	think(t_philo *philo)
 
 int	take_forks(t_philo *philo)
 {
-	if (philo->datas->dead || philo->datas->is_end)
-	{
-		if (pthread_mutex_lock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, LOCK_MUTEX_ERROR));
-		philo->datas->dead = TRUE;
-		if (pthread_mutex_unlock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, UNLOCK_MUTEX_ERROR));
-		return (0);
-	}
 	if (pthread_mutex_lock(&(philo->datas->fork_m[philo->forkL])))
 		return (set_error(philo->datas, LOCK_MUTEX_ERROR));
 	if (pthread_mutex_lock(&(philo->datas->fork_m[philo->forkR])))
@@ -79,15 +52,6 @@ int	drop_forks_n_sleep(t_philo *philo)
 	long	time;
 
 	time = 0;
-	if (philo->datas->dead || philo->datas->is_end)
-	{
-		if (pthread_mutex_lock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, LOCK_MUTEX_ERROR));
-		philo->datas->dead = TRUE;
-		if (pthread_mutex_unlock(&(philo->datas->end_m)))
-			return (set_error(philo->datas, UNLOCK_MUTEX_ERROR));
-		return (0);
-	}
 	if (pthread_mutex_unlock(&(philo->datas->fork_m[philo->forkL])))
 		return (set_error(philo->datas, UNLOCK_MUTEX_ERROR));
 	if (pthread_mutex_unlock(&(philo->datas->fork_m[philo->forkR])))
@@ -103,22 +67,17 @@ int	eat(t_philo *philo)
 	long	time;
 
 	time = 0;
-	if (philo->datas->dead || philo->datas->is_end)
-	{
-		pthread_mutex_lock(&(philo->datas->end_m));
-		philo->datas->dead = TRUE;
-		pthread_mutex_unlock(&(philo->datas->end_m));
-		return (0);
-	}
 	if (pthread_mutex_lock(&(philo->datas->eat_m)))
 		return (set_error(philo->datas, LOCK_MUTEX_ERROR));
 	time = ft_get_time();
 	if (time == -1)
 		return (set_error(philo->datas, TIME_ERROR));
-	pthread_mutex_lock(&(philo->datas->end_m));
+	if (pthread_mutex_lock(&(philo->datas->end_m)))
+		return (set_error(philo->datas, LOCK_MUTEX_ERROR));
 	philo->start_eat_time = time;
-	pthread_mutex_unlock(&(philo->datas->end_m));
 	philo->datas->eat_count++;
+	if (pthread_mutex_unlock(&(philo->datas->end_m)))
+		return (set_error(philo->datas, UNLOCK_MUTEX_ERROR));
 	if (message(philo, "is eating\n", "\033[0;32m"))
 		return (-1);
 	if (pthread_mutex_unlock(&(philo->datas->eat_m)))

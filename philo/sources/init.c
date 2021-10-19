@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:48:31 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 18:50:49 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/19 19:57:31 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static int	prepare_datas(t_datas *datas, char **av)
 	set_error(datas, NO_ERROR);
 	datas->start_time_simul = 0;
 	datas->eat_count = 0;
-	datas->dead = FALSE;
-	datas->is_end = FALSE;
 	datas->philo_nb = my_atol(av[1]);
 	datas->die_time = my_atol(av[2]);
 	datas->eat_time = my_atol(av[3]);

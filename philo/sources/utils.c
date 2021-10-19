@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:09:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 18:52:52 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/19 20:09:07 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	set_error(t_datas *datas, t_error error)
 {
-	pthread_mutex_lock(&(datas->error_m));
+	if (pthread_mutex_lock(&(datas->error_m)))
+		return (LOCK_MUTEX_ERROR);
 	datas->error_type = error;
-	pthread_mutex_unlock(&(datas->error_m));
+	if (pthread_mutex_unlock(&(datas->error_m)))
+		return (UNLOCK_MUTEX_ERROR);
 	return (error);
 }
 

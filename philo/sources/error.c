@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:09:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/17 14:06:28 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/19 20:22:25 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_error_type_2(t_error error)
 	else if (error == USLEEP_ERROR)
 		return ("USLEEP_ERROR");
 	else
-		return ("Error getting error type");
+		return (NULL);
 }
 
 char	*get_error_type(t_error error)
@@ -70,7 +70,7 @@ static char	*message_error_2(t_error error)
 	else if (error == USLEEP_ERROR)
 		return ("Usleep failed");
 	else
-		return ("Error getting error type");
+		return (NULL);
 }
 
 char	*message_error(t_error error)
@@ -91,8 +91,9 @@ char	*message_error(t_error error)
 
 int	error_manager(t_datas *datas, t_philo *philos, t_error error)
 {
-	printf("Error of type %s:\n%s\n", get_error_type(error), \
-		message_error(error));
+	if (error != NO_ERROR)
+		printf("Error of type %s:\n%s\n", get_error_type(error), \
+			message_error(error));
 	clear_datas(philos, datas);
 	return (-1);
 }

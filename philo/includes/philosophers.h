@@ -41,8 +41,6 @@ typedef struct s_datas
 	pthread_t		monitor_thread;
 
 	t_error			error_type;
-	t_bool			dead;
-	t_bool			is_end;
 
 	int				philo_nb;
 	long			die_time;

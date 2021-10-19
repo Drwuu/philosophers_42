@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:16:43 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 19:05:00 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/19 20:02:46 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 static t_bool	is_end(t_philo *philo)
 {
-	if (philo->datas->must_eat_count > 0 && \
-	philo->datas->eat_count >= \
+	int	eat_count;
+
+	if (pthread_mutex_lock(&(philo->datas->end_m)))
+		return (set_error(philo->datas, LOCK_MUTEX_ERROR));
+	eat_count = philo->datas->eat_count;
+	if (pthread_mutex_unlock(&(philo->datas->end_m)))
+		return (set_error(philo->datas, UNLOCK_MUTEX_ERROR));
+	if (philo->datas->must_eat_count > 0 && eat_count >= \
 	philo->datas->must_eat_count * philo->datas->philo_nb)
 	{
-		philo->datas->is_end = TRUE;
 		printf("Philosophers ate all meals\n");
 		return (TRUE);
 	}
