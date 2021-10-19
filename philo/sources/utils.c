@@ -6,11 +6,19 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:09:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/17 15:08:19 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/19 18:52:52 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	set_error(t_datas *datas, t_error error)
+{
+	pthread_mutex_lock(&(datas->error_m));
+	datas->error_type = error;
+	pthread_mutex_unlock(&(datas->error_m));
+	return (error);
+}
 
 void	my_sleep(long time_to_wait)
 {

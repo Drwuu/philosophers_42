@@ -37,6 +37,7 @@ typedef struct s_datas
 	pthread_mutex_t	end_m;
 	pthread_mutex_t	eat_m;
 	pthread_mutex_t	write_m;
+	pthread_mutex_t	error_m;
 	pthread_t		monitor_thread;
 
 	t_error			error_type;
@@ -56,7 +57,6 @@ typedef struct s_philo
 {
 	t_datas		*datas;
 	pthread_t	thread;
-	t_bool		start_eating;
 
 	int			id;
 	int			forkL;
@@ -78,6 +78,7 @@ int		think(t_philo *philo);
 int		init_datas(int ac, char **av, t_datas *datas);
 
 /* utils.c */
+int		set_error(t_datas *datas, t_error error);
 t_bool	is_digit(char *str);
 long	my_atol(const char *str);
 long	ft_get_time(void);
@@ -90,7 +91,6 @@ char	*message_error(t_error error);
 
 /* clear.c */
 void	clear_datas(t_philo *philos, t_datas *datas);
-int		unlock_mutexes(t_philo *philo);
 int		destroy_mutexes(t_datas *datas);
 
 #endif
