@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:15:24 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 19:57:13 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/20 13:19:45 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_philo	*create_philos(t_datas *datas)
 	philos = malloc(sizeof(*philos) * datas->philo_nb);
 	if (!philos)
 	{
-		set_error(philos->datas, MALLOC_ERROR);
+		datas->error_type = MALLOC_ERROR;
 		return (NULL);
 	}
 	while (++i < datas->philo_nb)
@@ -64,7 +64,7 @@ static int	start_threads(t_philo *philos)
 	i = -1;
 	philos->datas->start_time_simul = ft_get_time();
 	if (pthread_create(&philos->datas->monitor_thread, NULL, &monitor, philos))
-		return (set_error(philos->datas, THREAD_CREATE_ERROR));
+		return (philos->datas->error_type = THREAD_CREATE_ERROR);
 	while (++i < philos->datas->philo_nb)
 	{
 		if (pthread_create(&(philos[i].thread), NULL, &routine, &(philos[i])))

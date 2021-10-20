@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:09:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 20:22:48 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/20 13:37:28 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ void	clear_datas(t_philo *philos, t_datas *datas)
 {
 	if (datas)
 	{
-		if (destroy_mutexes(datas))
-			printf("Error of type DESTROY_MUTEX_ERROR:\n"
-				"Mutex destroy failed\n");
+		if (datas->error_type != ARGUMENTS_DIGIT_ERROR && \
+		datas->error_type != ARGUMENTS_ERROR && datas->error_type != \
+		ARGUMENTS_LIMIT_ERROR)
+			if (destroy_mutexes(datas))
+				printf("Error of type DESTROY_MUTEX_ERROR:\n"
+					"Mutex destroy failed\n");
 		if (datas->fork_m)
 			free(datas->fork_m);
 		free(datas);

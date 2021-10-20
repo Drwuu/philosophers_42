@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:09:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/10/19 20:22:25 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/10/20 13:30:31 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static char	*get_error_type_2(t_error error)
 		return ("ARGUMENTS_ERROR");
 	else if (error == ARGUMENTS_DIGIT_ERROR)
 		return ("ARGUMENTS_DIGIT_ERROR");
+	else if (error == ARGUMENTS_LIMIT_ERROR)
+		return ("ARGUMENTS_LIMIT_ERROR");
 	else if (error == MALLOC_ERROR)
 		return ("MALLOC_ERROR");
 	else if (error == USLEEP_ERROR)
@@ -65,6 +67,8 @@ static char	*message_error_2(t_error error)
 			"[number_of_times_each_philosopher_must_eat]");
 	else if (error == ARGUMENTS_DIGIT_ERROR)
 		return ("Please use positive numbers");
+	else if (error == ARGUMENTS_LIMIT_ERROR)
+		return ("Please don't use extreme values as arguments");
 	else if (error == MALLOC_ERROR)
 		return ("Malloc broke up");
 	else if (error == USLEEP_ERROR)
